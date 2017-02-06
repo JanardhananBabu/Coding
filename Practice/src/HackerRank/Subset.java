@@ -1,12 +1,14 @@
 package HackerRank;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Subset {
 	
 	public List<List<Integer>> subsetWithOutDuplicates(int[] input){
 		List<List<Integer>> list = new ArrayList<>();
+		Arrays.sort(input);
 		subsetWithOutDuplicatesUtil(list,new ArrayList<Integer>(),input,0);
 		return list;
 	}
@@ -16,6 +18,18 @@ public class Subset {
 		ArrayList<Integer> currLst = new ArrayList<Integer>(currList);
 		list.add(currLst);
 		for(int i=start;i<input.length;i++){
+			currLst.add(input[i]);
+			subsetWithOutDuplicatesUtil(list,currLst,input,i+1);
+			currLst.remove(currLst.size()-1);
+		}
+	}
+	
+	public void subsetWithDuplicatesUtil(List<List<Integer>> list, List<Integer> currList, int[] input, int start){
+
+		ArrayList<Integer> currLst = new ArrayList<Integer>(currList);
+		list.add(currLst);
+		for(int i=start;i<input.length;i++){
+			if(i>start && input[i]==input[i-1]) continue;
 			currLst.add(input[i]);
 			subsetWithOutDuplicatesUtil(list,currLst,input,i+1);
 			currLst.remove(currLst.size()-1);

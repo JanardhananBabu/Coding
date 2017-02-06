@@ -17,10 +17,22 @@ public class Combination {
 		if(remain<0) return;
 		if(remain==0) list.add(new ArrayList<Integer>(currList));
 		else{
-			for(int i=0;i<input.length;i++){
-				//if(currList.contains(input[i]))continue;
+			for(int i=start;i<input.length;i++){
 				currList.add(input[i]);
 				combinationWithReplacementsUtil(list, currList, remain-input[i], input, i);
+				currList.remove(currList.size()-1);
+			}
+		}
+	}
+	
+	public void combinationWithoutReplacementsUtil(List<List<Integer>> list, List<Integer> currList, int remain, int[] input, int start){
+		if(remain<0) return;
+		if(remain==0) list.add(new ArrayList<Integer>(currList));
+		else{
+			for(int i=start;i<input.length;i++){
+				if(i>start && input[i]==input[i-1])continue;
+				currList.add(input[i]);
+				combinationWithoutReplacementsUtil(list, currList, remain-input[i], input, i+1);
 				currList.remove(currList.size()-1);
 			}
 		}

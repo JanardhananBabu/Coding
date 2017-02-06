@@ -27,6 +27,22 @@ public class Permutation {
 		}
 	}
 	
+	public void permutationWithDuplicatesUtil(List<List<Integer>> list, List<Integer> currList, int[] input, boolean[] used){
+		if(currList.size()==input.length){
+			list.add(new ArrayList<Integer>(currList));
+		}
+		else{
+			for(int i=0;i<input.length;i++){
+				if(used[i] || i>0 && input[i]==input[i-1] && !used[i-1]) continue;//to add new elements 
+				used[i]=true;
+				currList.add(input[i]);
+				permutationWithDuplicatesUtil(list,currList,input,used);
+				used[i]=false;
+				currList.remove(currList.size()-1);
+			}
+		}
+	}
+	
 	public static void main(String...args){
 		Permutation obj = new Permutation();
 		List<List<Integer>> list = obj.permutationWithOutDuplicates(new int[]{1,2,3,4});
